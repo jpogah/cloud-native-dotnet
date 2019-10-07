@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Steeltoe.Extensions.Configuration.ConfigServer;
+using Steeltoe.Extensions.Logging;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -49,7 +50,7 @@ namespace FortuneTeller.Service
                 {
                     logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
                     logging.AddDebug();
-                    logging.AddConsole();
+                    logging.AddDynamicConsole();
                 })
                 .UseIISIntegration()
                 .UseUrls(new string[] { "http://*:5001" })

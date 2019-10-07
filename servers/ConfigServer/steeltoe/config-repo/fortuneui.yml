@@ -7,3 +7,5 @@ fortuneService:
   baseAddress: localhost:5001/api/fortunes/
   allFortunesPath: all
   randomFortunePath: random
+
+  

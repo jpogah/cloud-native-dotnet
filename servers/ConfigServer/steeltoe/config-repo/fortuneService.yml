@@ -5,3 +5,11 @@ eureka:
     preferIpAddress: true
     ipAddress: 127.0.0.1
     port: 5001
+sqlServer:
+  credentials:
+    connectionString: "Server=(localdb)\\mssqllocaldb;database=fortuneService;Trusted_Connection=True;"
+security:
+  oauth2:
+    client:
+      clientId: fortuneservice
+      clientSecret: fortuneservice_secret

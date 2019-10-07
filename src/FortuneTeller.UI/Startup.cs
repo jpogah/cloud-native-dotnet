@@ -1,12 +1,19 @@
 using FortuneTeller.UI.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Steeltoe.CircuitBreaker.Hystrix;
 using Steeltoe.Common.Http.Discovery;
 using Steeltoe.Discovery.Client;
+using Steeltoe.Management.Endpoint.Health;
+using Steeltoe.Management.Endpoint.Info;
+using Steeltoe.Management.Endpoint.Loggers;
+using Steeltoe.Management.Endpoint.Trace;
+using Steeltoe.Security.Authentication.CloudFoundry;
 
 namespace FortuneTeller.UI
 {
@@ -29,15 +36,38 @@ namespace FortuneTeller.UI
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddTransient<DiscoveryHttpMessageHandler>();
+            services
+                .AddAuthentication((options) =>
+                {
+                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = CloudFoundryDefaults.AuthenticationScheme;
+                })
+                .AddCookie((options) =>
+                {
+                    options.AccessDeniedPath = new PathString("/Error");
+                })
+                .AddCloudFoundryOAuth(Configuration);
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("fortunes.read", policy => policy.RequireClaim("scope", "fortunes.read"));
+            });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDiscoveryClient(Configuration);
             services.Configure<FortuneServiceOptions>(Configuration.GetSection("fortuneService"));
             services.AddScoped<IFortuneService, FortuneServiceClient>();
             services.AddHttpClient<IFortuneService, FortuneServiceClient>()
                 .AddHttpMessageHandler<DiscoveryHttpMessageHandler>();
-            
 
             services.AddDistributedMemoryCache();
+            services.AddHystrixCommand<FortuneServiceCommand>("FortuneService", Configuration);
+            services.AddHystrixMetricsStream(Configuration);
+
             services.AddSession();
+            services.AddInfoActuator(Configuration);
+            services.AddLoggersActuator(Configuration);
+            services.AddHealthActuator(Configuration);
+            services.AddTraceActuator(Configuration);
+
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -59,7 +89,15 @@ namespace FortuneTeller.UI
             app.UseSession();
             app.UseCookiePolicy();
             app.UseDiscoveryClient();
+            app.UseHystrixRequestContext();
+            app.UseHystrixMetricsStream();
+            app.UseAuthentication();
+            app.UseInfoActuator();
+            app.UseLoggersActuator();
+            app.UseHealthActuator();
+            app.UseTraceActuator();
             app.UseMvc();
+            
         }
     }
 }
