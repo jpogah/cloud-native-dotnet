@@ -7,12 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Steeltoe.CircuitBreaker.Hystrix;
+using Steeltoe.CloudFoundry.Connector.Redis;
 using Steeltoe.Common.Http.Discovery;
 using Steeltoe.Discovery.Client;
 using Steeltoe.Management.Endpoint.Health;
 using Steeltoe.Management.Endpoint.Info;
 using Steeltoe.Management.Endpoint.Loggers;
 using Steeltoe.Management.Endpoint.Trace;
+using Steeltoe.Management.Exporter.Tracing;
+using Steeltoe.Management.Tracing;
 using Steeltoe.Security.Authentication.CloudFoundry;
 
 namespace FortuneTeller.UI
@@ -62,11 +65,16 @@ namespace FortuneTeller.UI
             services.AddHystrixCommand<FortuneServiceCommand>("FortuneService", Configuration);
             services.AddHystrixMetricsStream(Configuration);
 
+            services.AddDistributedRedisCache(Configuration);
             services.AddSession();
             services.AddInfoActuator(Configuration);
             services.AddLoggersActuator(Configuration);
             services.AddHealthActuator(Configuration);
             services.AddTraceActuator(Configuration);
+            services.AddDistributedTracing(Configuration);
+            services.AddZipkinExporter(Configuration);
+
+
 
             services
                 .AddMvc()
@@ -96,6 +104,7 @@ namespace FortuneTeller.UI
             app.UseLoggersActuator();
             app.UseHealthActuator();
             app.UseTraceActuator();
+            app.UseTracingExporter();
             app.UseMvc();
             
         }

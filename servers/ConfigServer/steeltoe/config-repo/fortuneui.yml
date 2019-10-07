@@ -8,4 +8,18 @@ fortuneService:
   allFortunesPath: all
   randomFortunePath: random
 
+<<<<<<< HEAD
+=======
+redis:
+  client:
+    host: 127.0.0.1
+    port: 6379
+  
+security: 
+  oauth2:
+    client:
+      clientId: fortuneui
+      clientSecret: fortuneui_secret
+
+>>>>>>> added circuit breaker and security
   

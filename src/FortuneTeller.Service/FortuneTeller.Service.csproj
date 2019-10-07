@@ -20,6 +20,11 @@
     <PackageReference Include="Steeltoe.Extensions.Configuration.ConfigServerCore" Version="2.3.0" />
     <PackageReference Include="Steeltoe.Management.CloudFoundryCore" Version="2.2.1" />
     <PackageReference Include="Steeltoe.Management.EndpointCore" Version="2.2.1" />
+<<<<<<< HEAD
+=======
+    <PackageReference Include="Steeltoe.Management.ExporterCore" Version="2.2.0" />
+    <PackageReference Include="Steeltoe.Management.TracingCore" Version="2.2.0" />
+>>>>>>> added circuit breaker and security
     <PackageReference Include="Steeltoe.Security.Authentication.CloudFoundryCore" Version="2.2.0" />
   </ItemGroup>
 

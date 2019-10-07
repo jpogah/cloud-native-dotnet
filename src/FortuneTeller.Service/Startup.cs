@@ -13,6 +13,8 @@ using Steeltoe.Management.Endpoint.Info;
 using Steeltoe.Management.Endpoint.Loggers;
 using Steeltoe.Management.Endpoint.Health;
 using Steeltoe.Management.Endpoint.Trace;
+using Steeltoe.Management.Tracing;
+using Steeltoe.Management.Exporter.Tracing;
 
 namespace FortuneTeller.Service
 {
@@ -38,6 +40,8 @@ namespace FortuneTeller.Service
 
             services.AddEntityFrameworkInMemoryDatabase().AddDbContext<FortuneContext>(options => options.UseInMemoryDatabase("Fortunes"));
             //services.AddDbContext<FortuneContext>(options => options.UseSqlServer(Configuration));
+           // services.AddEntityFrameworkInMemoryDatabase().AddDbContext<FortuneContext>(options => options.UseInMemoryDatabase("Fortunes"));
+            services.AddDbContext<FortuneContext>(options => options.UseSqlServer(Configuration));
             services.AddScoped<IFortuneRepository, FortuneRepository>();
             services.AddDiscoveryClient(Configuration);
             services.AddInfoActuator(Configuration);
@@ -45,6 +49,8 @@ namespace FortuneTeller.Service
             services.AddHealthActuator(Configuration);
             services.AddTraceActuator(Configuration);
 
+            services.AddDistributedTracing(Configuration);
+            services.AddZipkinExporter(Configuration);
 
             
             services
@@ -66,6 +72,7 @@ namespace FortuneTeller.Service
             app.UseLoggersActuator();
             app.UseHealthActuator();
             app.UseTraceActuator();
+            app.UseTracingExporter();
             app.UseMvc();
            
         }
