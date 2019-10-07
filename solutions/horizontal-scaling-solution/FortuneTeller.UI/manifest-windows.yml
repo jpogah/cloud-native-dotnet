@@ -1,0 +1,10 @@
+﻿---
+applications:
+- name: fortuneUI
+  random-route: true
+  buildpack: binary_buildpack
+  memory: 256M
+  stack: windows2016
+  command: .\FortuneTeller.UI
+  env:
+    ASPNETCORE_ENVIRONMENT: Production

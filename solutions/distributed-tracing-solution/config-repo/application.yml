@@ -1,0 +1,32 @@
+---
+Logging:
+  IncludeScopes: true
+  Debug:
+    LogLevel:
+      Default: Information
+  Console:
+    LogLevel:
+      Default: Information
+eureka:
+  client:
+    serviceUrl: http://localhost:8761/eureka/
+security:
+  oauth2:
+    client:
+      authorizationEndpoint: "http://localhost:8080/uaa/oauth/authorize"
+      tokenEndpoint: "http://localhost:8080/uaa/oauth/token"
+      tokenInfoUrl: "http://localhost:8080/uaa/check_token"
+      userInformationEndpoint: "http://localhost:8080/uaa/userinfo"
+      jwtKeyUrl: "http://localhost:8080/uaa/token_keys"
+management:
+  endpoints:
+    actuator:
+      exposure:
+        include: ["info", "health", "trace", "loggers"]
+  tracing:
+    alwaysSample: true
+    egressIgnorePattern: "/api/v2/spans|/v2/apps/.*/permissions|/eureka/.*|/oauth/.*"
+    exporter:
+      zipkin:
+        endpoint: http://localhost:9411/api/v2/spans
+        validateCertificates: false

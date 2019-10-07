@@ -1,0 +1,61 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="jumbotron">
+    <div class="media">
+        <a class="pull-left" href="http://steeltoe.io">
+            <img class="" src="http://steeltoe.io/images/transparent.png" title="Steeltoe" alt="Steeltoe" />
+        </a>
+        <div class="media-body">
+            <h1 class="media-heading">Steeltoe</h1>
+        </div>
+    </div>
+    <p class="lead">Painless microservice patterns for .NET.</p>
+    <p class="lead">For all their benefits, microservice architectures expose many distributed computing problems that traditional monoliths avoided. Steeltoe brings the power of resilient, scalable microservices to .NET developers, without all the headache.</p>
+    <p><a href="https://steeltoe.io" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <h4>
+            Your fortune: 
+            @if (Model.Message != null) { @Model.Message }
+            else { <span style="color:red">Has not been read yet!</span> }
+        </h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Service Discovery</h2>
+        <p>
+            How do you make the the interactions between your microservices reliable and failure tolerant? 
+            Start with service registry—basically a phone book for your services—so service consumers know where to find healthy service instances.
+            Steeltoe includes a .NET client for Netflix Eureka so your services can register and discover other registered services.
+        </p>
+        <p><a class="btn btn-default" href="https://steeltoe.io/docs/steeltoe-discovery/">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Configuration</h2>
+        <p>&quot;Strict separation of config from code&quot; has become a cloud mandate, but that begs the question, where do you put it? And once you&apos;ve externalized your config from your app, how do you track who changed what, when? Steeltoe leverages Spring Cloud Config Server so you can store your app’s config in a centralized, version-controlled git repo and then load it at runtime.</p>
+        <p><a class="btn btn-default" href="https://steeltoe.io/docs/steeltoe-configuration/">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Service Connectors</h2>
+        <p>Steeltoe automatically wires up common backing services like Redis, RabbitMQ, MySQL and Postgres because no microservice is an island. And because it was built by Pivotal, Steeltoe integrates elegantly with Cloud Foundry.</p>
+        <p><a class="btn btn-default" href="https://steeltoe.io/docs/steeltoe-connectors/">Learn more &raquo;</a></p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h2>Circuit Breaker</h2>
+        <p>The Steeltoe Circuit Breaker framework provides applications with an implementation of the Circuit Breaker pattern. Cloud-native architectures typically consist of multiple layers of distributed services.</p>
+        <p><a class="btn btn-default" href="https://steeltoe.io/docs/steeltoe-circuitbreaker/">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-6">
+        <h2>Management</h2>
+        <p>Steeltoe includes a number of optional features you can add to your applications to aid in monitoring and managing it while it runs in production. These features are implemented as a number of management endpoints that you can easily add to your application.</p>
+        <p><a class="btn btn-default" href="https://steeltoe.io/docs/steeltoe-management/">Learn more &raquo;</a></p>
+    </div>
+</div>

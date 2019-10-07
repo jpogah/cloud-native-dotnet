@@ -1,0 +1,7 @@
+eureka:
+  client:
+    shouldFetchRegistry: false
+  instance:
+    preferIpAddress: true
+    ipAddress: 127.0.0.1
+    port: 5001

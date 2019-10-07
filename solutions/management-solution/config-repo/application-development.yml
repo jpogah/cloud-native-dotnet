@@ -1,0 +1,16 @@
+---
+Logging:
+  LogLevel:
+    Default: Debug
+    System: Information
+    Microsoft: Information
+  Debug:
+    LogLevel:
+      Default: Information
+      FortuneTeller.UI: Debug
+      Steeltoe: Debug
+  Console:
+    LogLevel:
+      Default: Information
+      FortuneTeller.UI: Debug
+      Steeltoe: Debug

@@ -1,0 +1,13 @@
+---
+eureka:
+  client:
+    shouldRegisterWithEureka: false
+fortuneService:
+  scheme: http
+  baseAddress: fortuneservice/api/fortunes/
+  allFortunesPath: all
+  randomFortunePath: random
+redis:
+  client:
+    host: 127.0.0.1
+    port: 6379
